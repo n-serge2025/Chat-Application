@@ -1,14 +1,18 @@
 version: 0.2
 phases:
+  install:
+    commands:
+      - echo Installing Maven...
+      - apt-get update && apt-get install -y maven  # Install Maven if missing
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app
+      - echo Compiling the Spring Boot app...
+      - mvn clean package  # Build the JAR file
   build:
     commands:
       - echo Building Docker image...
       - docker build -t 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest .
   post_build:
     commands:
-      - echo Pushing Docker image to ECR...
+      - echo Pushing Docker image...
       - docker push 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest
