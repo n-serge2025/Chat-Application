@@ -1,23 +1,5 @@
 version: 0.2
 phases:
-  install:
-    commands:
-      - echo Installing Java and Maven...
-      - apt-get update -y
-      - apt-get install -y openjdk-11-jdk  # Install Java 11 (matches Dockerfile)
-      - apt-get install -y maven           # Install Maven
-  pre_build:
-    commands:
-      - echo Checking Java and Maven versions...
-      - java -version
-      - mvn -version
   build:
     commands:
-      - echo Compiling Spring Boot app...
-      - mvn clean package  # Build the JAR
-      - echo Building Docker image...
-      - docker build -t 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest .
-  post_build:
-    commands:
-      - echo Pushing Docker image to ECR...
-      - docker push 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest
+      - echo "Hello World"
