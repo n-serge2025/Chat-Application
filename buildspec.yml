@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest .
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR...
+      - docker push 339039570958.dkr.ecr.us-east-1.amazonaws.com/inventory-app:latest
